@@ -27,6 +27,7 @@
  	3. Ejecute y revise la salida por pantalla. 
 	![image](https://github.com/user-attachments/assets/a41ecf8c-6db7-4958-af4c-579de78952c4)
  	4. Cambie el incio con 'start()' por 'run()'. Cómo cambia la salida?, por qué?.
+     	Ahora la salida no parece que se ejecutan todos los hilos al mismo tiempo, sino que se hace de forma secuencial, según se llaman los métodos run(). Esto sucede porque cuando se usa el método start() se crea un nuevo hilo y luego se ejecuta el método run(), pero 	si se llama directamente el método run() entonces no se crea un nuevo hilo y el método se ejecutará como una llamada normal a un método en el hilo actual y no existiran multiples hilos ejecutandose.
 	![image](https://github.com/user-attachments/assets/7f98fb85-7186-4223-9e5e-8cb024a246fe)
 
 **Parte II - Ejercicio Black List Search**
