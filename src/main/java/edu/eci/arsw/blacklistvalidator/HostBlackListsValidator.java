@@ -6,8 +6,12 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+import edu.eci.arsw.threads.SearchThread;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ServiceConfigurationError;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,39 +33,56 @@ public class HostBlackListsValidator {
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
      */
-    public List<Integer> checkHost(String ipaddress){
-        
-        LinkedList<Integer> blackListOcurrences=new LinkedList<>();
-        
-        int ocurrencesCount=0;
-        
+    public List<Integer> checkHost(String ipaddress, int threads){
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
-        
-        int checkedListsCount=0;
-        
-        for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
-            checkedListsCount++;
-            
-            if (skds.isInBlackListServer(i, ipaddress)){
-                
-                blackListOcurrences.add(i);
-                
-                ocurrencesCount++;
-            }
+        LinkedList<Integer> blackListOcurrences=new LinkedList<>();
+        for(int i=0; i<threads; i++){
+            // TODO: hacer los hilos y asignarles los rangos, juntar las ocurrencias e imprimir el resultado
         }
-        
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
         }
         else{
             skds.reportAsTrustworthy(ipaddress);
-        }                
-        
+        }
         LOG.log(Level.INFO, "Checked Black Lists:{0} of {1}", new Object[]{checkedListsCount, skds.getRegisteredServersCount()});
-        
         return blackListOcurrences;
     }
-    
+    private List<List<Integer>> ranges(int threads){
+        HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
+        int totalLists = skds.getRegisteredServersCount(); // Total de listas
+        int numberOfSegments = threads;
+        List<List<Integer>> segmentRanges = new ArrayList<>();
+        // Calcula el tamaño base de cada segmento
+        int baseSize = totalLists / numberOfSegments;
+        int remainder = totalLists % numberOfSegments;
+
+        // Definir y mostrar los rangos de cada segmento
+        int startIndex = 0;
+
+        System.out.println("Número de segmentos: " + numberOfSegments);
+
+        for (int i = 0; i < numberOfSegments; i++) {
+            int segmentSize = (i < remainder) ? baseSize + 1 : baseSize;
+            int endIndex = startIndex + segmentSize - 1;
+
+            // Crear una lista para el rango actual y agregarla a la lista de segmentos
+            List<Integer> range = new ArrayList<>();
+            range.add(startIndex);
+            range.add(endIndex);
+            segmentRanges.add(range);
+
+            // Actualizar el índice de inicio para el siguiente segmento
+            startIndex = endIndex + 1;
+        }
+
+      /*  // Mostrar los rangos almacenados para verificar
+        for (int i = 0; i < segmentRanges.size(); i++) {
+            List<Integer> range = segmentRanges.get(i);
+            System.out.printf("Segmento %d: Listas de %d a %d%n", i + 1, range.get(0), range.get(1));
+        }*/
+        return segmentRanges;
+    }
     
     private static final Logger LOG = Logger.getLogger(HostBlackListsValidator.class.getName());
     
