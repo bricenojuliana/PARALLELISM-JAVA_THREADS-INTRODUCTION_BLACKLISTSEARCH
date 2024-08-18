@@ -20,12 +20,12 @@
 
 2. Complete el método __main__ de la clase CountMainThreads para que:
 	1. Cree 3 hilos de tipo CountThread, asignándole al primero el intervalo [0..99], al segundo [99..199], y al tercero [200..299].
-![image](https://github.com/user-attachments/assets/a4efe454-4853-439f-8ab8-1a9e30d3b66b)
-	
+   	![image](https://github.com/user-attachments/assets/a4efe454-4853-439f-8ab8-1a9e30d3b66b)
 	2. Inicie los tres hilos con 'start()'.
-	![image](https://github.com/user-attachments/assets/fa35af48-31b2-42df-a4b6-0101d3c275dd)
- 	3. Ejecute y revise la salida por pantalla. 
-	![image](https://github.com/user-attachments/assets/a41ecf8c-6db7-4958-af4c-579de78952c4)
+	   ![image](https://github.com/user-attachments/assets/fa35af48-31b2-42df-a4b6-0101d3c275dd)
+ 	3. Ejecute y revise la salida por pantalla.
+   
+        ![image](https://github.com/user-attachments/assets/a41ecf8c-6db7-4958-af4c-579de78952c4)
  	4. Cambie el incio con 'start()' por 'run()'. Cómo cambia la salida?, por qué?.
      	Ahora la salida no parece que se ejecutan todos los hilos al mismo tiempo, sino que se hace de forma secuencial, según se llaman los métodos run(). Esto sucede porque cuando se usa el método start() se crea un nuevo hilo y luego se ejecuta el método run(), pero 	si se llama directamente el método run() entonces no se crea un nuevo hilo y el método se ejecutará como una llamada normal a un método en el hilo actual y no existiran multiples hilos ejecutandose.
 	![image](https://github.com/user-attachments/assets/7f98fb85-7186-4223-9e5e-8cb024a246fe)
