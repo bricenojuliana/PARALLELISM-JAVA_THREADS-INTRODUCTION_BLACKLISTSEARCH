@@ -180,9 +180,14 @@ La gráfica nos da la idea de que el uso de múltiples hilos mejora significativ
 
 1. Según la [ley de Amdahls](https://www.pugetsystems.com/labs/articles/Estimating-CPU-Performance-using-Amdahls-Law-619/#WhatisAmdahlsLaw?):
 
-	![](img/ahmdahls.png), donde _S(n)_ es el mejoramiento teórico del desempeño, _P_ la fracción paralelizable del algoritmo, y _n_ el número de hilos, a mayor _n_, mayor debería ser dicha mejora. Por qué el mejor desempeño no se logra con los 500 hilos?, cómo se compara este desempeño cuando se usan 200?. 
+	![](img/ahmdahls.png), donde _S(n)_ es el mejoramiento teórico del desempeño, _P_ la fracción paralelizable del algoritmo, y _n_ el número de hilos, a mayor _n_, mayor debería ser dicha mejora. Por qué el mejor desempeño no se logra con los 500 hilos?, cómo se compara este desempeño cuando se usan 200?.
+
+El mejor desempeño no se logra con 500 hilos porque, aunque en teoría más hilos deberían mejorar el rendimiento, en la práctica manejar tantos hilos al mismo tiempo genera más problemas de lo que soluciona. El sistema tiene que dedicar tiempo y recursos para coordinar todos esos hilos, lo que puede terminar haciéndolo más lento. Cuando se usan 200 hilos, el sistema parece estar en un punto donde todavía puede manejar bien la carga sin sobrecargarse.
 
 2. Cómo se comporta la solución usando tantos hilos de procesamiento como núcleos comparado con el resultado de usar el doble de éste?.
+
+Al comparar el uso de tantos hilos como núcleos de procesamiento (12 hilos) con el uso del doble de núcleos (24 hilos), se observa que el tiempo de ejecución se reduce considerablemente. Con 12 hilos, el tiempo es de 10.063 ms, mientras que al usar 24 hilos, el tiempo se reduce a 5.037 ms, prácticamente la mitad.
+También se puede evidenciar y hay que tener en cuenta que el consumo de la cpu es mayor en el segundo caso.
 
 3. De acuerdo con lo anterior, si para este problema en lugar de 100 hilos en una sola CPU se pudiera usar 1 hilo en cada una de 100 máquinas hipotéticas, la ley de Amdahls se aplicaría mejor?. Si en lugar de esto se usaran c hilos en 100/c máquinas distribuidas (siendo c es el número de núcleos de dichas máquinas), se mejoraría?. Explique su respuesta.
 
