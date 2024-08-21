@@ -54,7 +54,6 @@ public class HostBlackListsValidator {
 
             startIndex = endIndex + 1;
         }
-
         // Esperar a que todos los hilos terminen su ejecución
         for(SearchThread thread : searchThreads) {
             try {
@@ -63,26 +62,19 @@ public class HostBlackListsValidator {
                 LOG.log(Level.SEVERE, "Thread interrupted", e);
             }
         }
-
         int checkedListsCount = 0;
 
         for(SearchThread thread : searchThreads){
             mergedBlackListOcurrences.addAll(thread.getBlackListOcurrences());
             checkedListsCount += thread.getCheckedListsCount();
         }
-
         if (mergedBlackListOcurrences.size() >= BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
         } else {
             skds.reportAsTrustworthy(ipaddress);
         }
-
         LOG.log(Level.INFO, "Checked Black Lists:{0} of {1}", new Object[]{checkedListsCount, skds.getRegisteredServersCount()});
         return mergedBlackListOcurrences;
     }
-    
     private static final Logger LOG = Logger.getLogger(HostBlackListsValidator.class.getName());
-    
-    
-    
 }
