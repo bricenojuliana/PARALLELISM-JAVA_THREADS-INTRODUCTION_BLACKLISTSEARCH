@@ -172,6 +172,10 @@ Al iniciar el programa ejecute el monitor jVisualVM, y a medida que corran las p
 
 Con lo anterior, y con los tiempos de ejecución dados, haga una gráfica de tiempo de solución vs. número de hilos. Analice y plantee hipótesis con su compañero para las siguientes preguntas (puede tener en cuenta lo reportado por jVisualVM):
 
+![image](https://github.com/user-attachments/assets/c9f27020-999f-4c6a-9e96-fd466393c74e)
+
+La gráfica nos da la idea de que el uso de múltiples hilos mejora significativamente el tiempo de solución en la validación de IPs, especialmente cuando se pasa de un solo hilo a varios. Sin embargo, a partir de cierto punto, alrededor de los 50 hilos, la reducción del tiempo del proceso al aumentar los hilos se reduce considerablemente, lo que suponemos que podría deberse a la sobrecarga del sistema al manejar demasiados hilos simultáneamente o a la saturación de los recursos de hardware disponibles. 
+
 **Parte IV - Ejercicio Black List Search**
 
 1. Según la [ley de Amdahls](https://www.pugetsystems.com/labs/articles/Estimating-CPU-Performance-using-Amdahls-Law-619/#WhatisAmdahlsLaw?):
