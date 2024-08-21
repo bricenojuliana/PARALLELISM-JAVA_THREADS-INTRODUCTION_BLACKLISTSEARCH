@@ -58,16 +58,19 @@ Para 'refactorizar' este código, y hacer que explote la capacidad multi-núcleo
 
 1. Cree una clase de tipo Thread que represente el ciclo de vida de un hilo que haga la búsqueda de un segmento del conjunto de servidores disponibles. Agregue a dicha clase un método que permita 'preguntarle' a las instancias del mismo (los hilos) cuantas ocurrencias de servidores maliciosos ha encontrado o encontró.
    
-    ![image](https://github.com/user-attachments/assets/d220ce24-c337-4fa1-8b71-c723763904a0)
+   ![image](https://github.com/user-attachments/assets/fb410323-5ca4-498a-be24-627d0b0889f7)
+
 
 
 2. Agregue al método 'checkHost' un parámetro entero N, correspondiente al número de hilos entre los que se va a realizar la búsqueda (recuerde tener en cuenta si N es par o impar!). Modifique el código de este método para que divida el espacio de búsqueda entre las N partes indicadas, y paralelice la búsqueda a través de N hilos. Haga que dicha función espere hasta que los N hilos terminen de resolver su respectivo sub-problema, agregue las ocurrencias encontradas por cada hilo a la lista que retorna el método, y entonces calcule (sumando el total de ocurrencuas encontradas por cada hilo) si el número de ocurrencias es mayor o igual a _BLACK_LIST_ALARM_COUNT_. Si se da este caso, al final se DEBE reportar el host como confiable o no confiable, y mostrar el listado con los números de las listas negras respectivas. Para lograr este comportamiento de 'espera' revise el método [join](https://docs.oracle.com/javase/tutorial/essential/concurrency/join.html) del API de concurrencia de Java. Tenga también en cuenta:
 
-    ![image](https://github.com/user-attachments/assets/157507ba-16e2-4ef0-875d-4d0079dd500b)
+   	![image](https://github.com/user-attachments/assets/47e128bd-1c04-499e-a32b-8f56405e88a0)
+
 
 	* Dentro del método checkHost Se debe mantener el LOG que informa, antes de retornar el resultado, el número de listas negras revisadas VS. el número de listas negras total (línea 60). Se debe garantizar que dicha información sea verídica bajo el nuevo esquema de procesamiento en paralelo planteado.
 
 	* Se sabe que el HOST 202.24.34.55 está reportado en listas negras de una forma más dispersa, y que el host 212.24.24.55 NO está en ninguna lista negra.
+
     ![image](https://github.com/user-attachments/assets/3c43310b-c0f5-433b-8a64-0ad2862ff6eb)
 
     ![image](https://github.com/user-attachments/assets/a1867b29-9787-4b3b-be75-7c3cda6a7c10)
@@ -87,49 +90,82 @@ A partir de lo anterior, implemente la siguiente secuencia de experimentos para 
 1. Un solo hilo.
 	
  	![image](https://github.com/user-attachments/assets/1f3af80c-4375-4483-a86b-ad524b57a71c)
+
  	- Tiempo de ejecución:
+
 	![image](https://github.com/user-attachments/assets/4da9ce95-b29b-4208-a7e9-37ec37738eb8)
+
 	- Consumo de CPU:
+
 	![image](https://github.com/user-attachments/assets/4616a8c8-22aa-4d8a-a2b3-c14f55ae0fe7)
+
   	- Consumo de memoria:
+     
      	![image](https://github.com/user-attachments/assets/6f96347a-5f32-4add-bf9e-0db578e036e5)
-2. Tantos hilos como núcleos de procesamiento (haga que el programa determine esto haciendo uso del [API Runtime](https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html)).
+     
+3. Tantos hilos como núcleos de procesamiento (haga que el programa determine esto haciendo uso del [API Runtime](https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html)).
 	
  	![image](https://github.com/user-attachments/assets/565e02fb-78cb-4637-8a4d-2c32d3b18505)
+
  	- Tiempo de ejecución:
+
 	![image](https://github.com/user-attachments/assets/1929fbca-0389-4d43-8498-575ee2f89ffd)
+
 	- Consumo de CPU:
+
 	![image](https://github.com/user-attachments/assets/a1322f8b-d2a8-4b29-bf61-92d3ad8fdc08)
+
   	- Consumo de memoria:
+     
      	![image](https://github.com/user-attachments/assets/55ff2feb-4c85-4c7d-90c8-d1e88fee09d0)
-3. Tantos hilos como el doble de núcleos de procesamiento.
+     
+4. Tantos hilos como el doble de núcleos de procesamiento.
 	
  	![image](https://github.com/user-attachments/assets/278d5110-38d1-43bb-8571-91cbf608cbba)
+
  	- Tiempo de ejecución:
+
 	![image](https://github.com/user-attachments/assets/9babd91b-3d2f-4f1d-b0d7-8740b3ddc487)
+
 	- Consumo de CPU:
+
 	![image](https://github.com/user-attachments/assets/c59fccaa-b5f6-4ec1-991e-eb1369e8f1c9)
+
   	- Consumo de memoria:
+     
      	![image](https://github.com/user-attachments/assets/fd59b650-2e15-45e0-824a-60e0843d9c23)
-4. 50 hilos.
+     
+6. 50 hilos.
 	
  	![image](https://github.com/user-attachments/assets/9e74ed68-f52b-45f8-8694-464e4b4943ba)
+
  	- Tiempo de ejecución:
+
 	![image](https://github.com/user-attachments/assets/04139e86-c70e-4bb8-a6e4-007537cb3adf)
+
 	- Consumo de CPU:
+
 	![image](https://github.com/user-attachments/assets/7e2a9136-4799-461f-a5b2-4c4b06d025dd)
+
   	- Consumo de memoria:
+     
      	![image](https://github.com/user-attachments/assets/bb0cac83-4fb4-4d02-8a17-f280e0c84079)
 	
-5. 100 hilos.
+8. 100 hilos.
    
 	![image](https://github.com/user-attachments/assets/5432d8ad-37e1-4214-9de4-d4918e379c8f)
+
  	- Tiempo de ejecución:
+
 	![image](https://github.com/user-attachments/assets/a5daade4-a53c-43c1-b46c-78daa3131b5d)
+
 	- Consumo de CPU:
 	Hicimos la prueba varias veces pero no monitoriaba el uso de CPU, tenemos como hipotesis que sea por el tiempo de ejecución del programa
+
 	![image](https://github.com/user-attachments/assets/c596d72a-8c92-4b9e-9e8f-e5e5391bf539)
+
   	- Consumo de memoria:
+     
      	![image](https://github.com/user-attachments/assets/e328db30-27a7-4086-bbda-dbbb5bbed48d)
 
 Al iniciar el programa ejecute el monitor jVisualVM, y a medida que corran las pruebas, revise y anote el consumo de CPU y de memoria en cada caso. ![](img/jvisualvm.png)
