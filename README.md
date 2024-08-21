@@ -85,10 +85,52 @@ La idea sería permitir que todos los hilos detengan su búsqueda tan pronto com
 A partir de lo anterior, implemente la siguiente secuencia de experimentos para realizar las validación de direcciones IP dispersas (por ejemplo 202.24.34.55), tomando los tiempos de ejecución de los mismos (asegúrese de hacerlos en la misma máquina):
 
 1. Un solo hilo.
+	
+ 	![image](https://github.com/user-attachments/assets/1f3af80c-4375-4483-a86b-ad524b57a71c)
+ 	- Tiempo de ejecución:
+	![image](https://github.com/user-attachments/assets/4da9ce95-b29b-4208-a7e9-37ec37738eb8)
+	- Consumo de CPU:
+	![image](https://github.com/user-attachments/assets/4616a8c8-22aa-4d8a-a2b3-c14f55ae0fe7)
+  	- Consumo de memoria:
+     	![image](https://github.com/user-attachments/assets/6f96347a-5f32-4add-bf9e-0db578e036e5)
 2. Tantos hilos como núcleos de procesamiento (haga que el programa determine esto haciendo uso del [API Runtime](https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html)).
+	
+ 	![image](https://github.com/user-attachments/assets/565e02fb-78cb-4637-8a4d-2c32d3b18505)
+ 	- Tiempo de ejecución:
+	![image](https://github.com/user-attachments/assets/1929fbca-0389-4d43-8498-575ee2f89ffd)
+	- Consumo de CPU:
+	![image](https://github.com/user-attachments/assets/a1322f8b-d2a8-4b29-bf61-92d3ad8fdc08)
+  	- Consumo de memoria:
+     	![image](https://github.com/user-attachments/assets/55ff2feb-4c85-4c7d-90c8-d1e88fee09d0)
 3. Tantos hilos como el doble de núcleos de procesamiento.
+	
+ 	![image](https://github.com/user-attachments/assets/278d5110-38d1-43bb-8571-91cbf608cbba)
+ 	- Tiempo de ejecución:
+	![image](https://github.com/user-attachments/assets/9babd91b-3d2f-4f1d-b0d7-8740b3ddc487)
+	- Consumo de CPU:
+	![image](https://github.com/user-attachments/assets/c59fccaa-b5f6-4ec1-991e-eb1369e8f1c9)
+  	- Consumo de memoria:
+     	![image](https://github.com/user-attachments/assets/fd59b650-2e15-45e0-824a-60e0843d9c23)
 4. 50 hilos.
+	
+ 	![image](https://github.com/user-attachments/assets/9e74ed68-f52b-45f8-8694-464e4b4943ba)
+ 	- Tiempo de ejecución:
+	![image](https://github.com/user-attachments/assets/04139e86-c70e-4bb8-a6e4-007537cb3adf)
+	- Consumo de CPU:
+	![image](https://github.com/user-attachments/assets/7e2a9136-4799-461f-a5b2-4c4b06d025dd)
+  	- Consumo de memoria:
+     	![image](https://github.com/user-attachments/assets/bb0cac83-4fb4-4d02-8a17-f280e0c84079)
+	
 5. 100 hilos.
+   
+	![image](https://github.com/user-attachments/assets/5432d8ad-37e1-4214-9de4-d4918e379c8f)
+ 	- Tiempo de ejecución:
+	![image](https://github.com/user-attachments/assets/a5daade4-a53c-43c1-b46c-78daa3131b5d)
+	- Consumo de CPU:
+	Hicimos la prueba varias veces pero no monitoriaba el uso de CPU, tenemos como hipotesis que sea por el tiempo de ejecución del programa
+	![image](https://github.com/user-attachments/assets/c596d72a-8c92-4b9e-9e8f-e5e5391bf539)
+  	- Consumo de memoria:
+     	![image](https://github.com/user-attachments/assets/e328db30-27a7-4086-bbda-dbbb5bbed48d)
 
 Al iniciar el programa ejecute el monitor jVisualVM, y a medida que corran las pruebas, revise y anote el consumo de CPU y de memoria en cada caso. ![](img/jvisualvm.png)
 
