@@ -1,3 +1,7 @@
+### INTEGRANTES DEL GRUPO:
+## Juliana Briceño 
+## Cristian Alvarez
+
 
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
